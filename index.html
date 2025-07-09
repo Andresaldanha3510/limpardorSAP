@@ -1,29 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Limpar SAP</title>
-</head>
-<body style="font-family: sans-serif; padding: 2rem;">
-  <h1>🧹 Limpador de Cache e Service Worker do SAP</h1>
-  <p>Clique no botão abaixo para limpar Service Workers e cache da página atual:</p>
-  <button onclick="limparTudo()" style="font-size: 18px; padding: 10px 20px;">🧼 Limpar agora</button>
-
-  <script>
-    async function limparTudo() {
-      try {
-        const regs = await navigator.serviceWorker.getRegistrations();
-        for (let reg of regs) {
-          await reg.unregister();
-        }
-        const keys = await caches.keys();
-        for (let key of keys) {
-          await caches.delete(key);
-        }
-        alert("✅ Service Worker removido e cache limpo!");
-      } catch (e) {
-        alert("❌ Erro ao limpar: " + e.message);
-      }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Bookmarklet Limpador SAP</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #f0f4f8;
+      color: #222;
     }
-  </script>
+    a.bookmarklet {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #007acc;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 0.3rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>📌 Bookmarklet: Limpar Cache SAP</h1>
+  <p>Arraste este botão para a sua barra de favoritos:</p>
+  <a 
+    class="bookmarklet"
+    href="javascript:(async()=>{for(const reg of await navigator.serviceWorker.getRegistrations())await reg.unregister();for(const key of await caches.keys())await caches.delete(key);alert('✅ Cache/SW limpos!');})();"
+  >
+    🧹 Limpar SAP Cache
+  </a>
+  <p>
+    Depois, abra qualquer página do SAP (<code>meu-sap.example.com</code>) e clique nesse favorito para executar.
+  </p>
 </body>
 </html>
